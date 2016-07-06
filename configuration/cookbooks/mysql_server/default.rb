@@ -6,6 +6,13 @@ end
   package pkg
 end
 
+remote_file '/etc/my.cnf' do
+  source 'files/etc/my.cnf'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
 service 'mysqld' do
   action [:enable, :start]
 end
