@@ -5,6 +5,8 @@ export SSH_INITIALIZE_KEY_PATH='xxxx'
 export JENKINS_SSH_SECRET_KEY_FULL_PATH='xxxx'
 # Jenkins SSH公開鍵
 export JENKINS_SSH_PUBLIC_KEY_FULL_PATH='xxxx'
+# Jenkinsのキーペア名
+export JENKINS_KEY_PAIR_NAME='xxxx'
 
 # 共有可能な環境変数定義
 source $(git rev-parse --show-toplevel)/shared_env.sh

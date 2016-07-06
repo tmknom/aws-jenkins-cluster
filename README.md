@@ -2,10 +2,16 @@
 
 ## 使い方
 
-### サーバプロビジョニング
+### jenkins_masterのプロビジョニング
 
 ```bash
-$ fab itamae_base -H <ip_address>
+$ fab itamae_jenkins_master -H <ip_address>
+```
+
+### jenkins_slaveのプロビジョニング
+
+```bash
+$ fab itamae_jenkins_slave -H <ip_address>
 ```
 
 ### AWSの環境構築
@@ -15,6 +21,7 @@ $ fab itamae_base -H <ip_address>
 ```bash
 $ fab build_vpc
 $ fab build_security_group
+$ fab build_ec2
 ```
 
 ### AWSの環境削除
@@ -22,6 +29,7 @@ $ fab build_security_group
 すべてキレイにしたいなら。
 
 ```bash
+$ fab delete_ec2
 $ fab delete_security_group
 $ fab delete_vpc
 ```

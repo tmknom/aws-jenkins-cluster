@@ -5,6 +5,92 @@ from fabric.api import *
 
 ENVIRONMENT = 'JenkinsCluster'
 
+JENKINS_SUBNET_NAME = 'JenkinsCluster-Public-Subnet-0'
+
+JENKINS_MASTER_TAG = 'JenkinsMaster'
+JENKINS_SLAVE_TAG = 'JenkinsSlave'
+
+JENKINS_MASTER_AMI = 'jenkins-master'
+JENKINS_SLAVE_AMI = 'jenkins-slave'
+
+
+def get_jenkins_cluster_tf_vars():
+    jenkins_master_ami_id = get_jenkins_master_ami_id()
+    jenkins_slave_ami_id = get_jenkins_slave_ami_id()
+    jenkins_master_security_group_id = get_jenkins_master_security_group_id()
+    jenkins_slave_security_group_id = get_jenkins_slave_security_group_id()
+    jenkins_subnet_id = get_jenkins_subnet_id()
+    jenkins_key_pair_name = get_jenkins_key_pair_name()
+    result = ' TF_VAR_jenkins_master_ami_id=%s' % (jenkins_master_ami_id) \
+             + ' TF_VAR_jenkins_slave_ami_id=%s' % (jenkins_slave_ami_id) \
+             + ' TF_VAR_jenkins_master_security_group_id=%s' % (jenkins_master_security_group_id) \
+             + ' TF_VAR_jenkins_slave_security_group_id=%s' % (jenkins_slave_security_group_id) \
+             + ' TF_VAR_jenkins_subnet_id=%s' % (jenkins_subnet_id) \
+             + ' TF_VAR_jenkins_key_pair_name=%s' % (jenkins_key_pair_name)
+    return result
+
+
+def get_jenkins_master_ami_id():
+    return get_ami_id(JENKINS_MASTER_AMI)
+
+
+def get_jenkins_slave_ami_id():
+    return get_ami_id(JENKINS_SLAVE_AMI)
+
+
+def get_jenkins_master_security_group_id():
+    return get_security_group_id(JENKINS_MASTER_TAG)
+
+
+def get_jenkins_slave_security_group_id():
+    return get_security_group_id(JENKINS_SLAVE_TAG)
+
+
+def get_jenkins_subnet_id():
+    return get_subnet_id(JENKINS_SUBNET_NAME)
+
+
+def get_jenkins_key_pair_name():
+    return get_env('JENKINS_KEY_PAIR_NAME')
+
+
+def get_ami_id(name):
+    region = get_default_region()
+    command = "aws ec2 describe-images " \
+              + " --region %s " % (region) \
+              + " --owners self " \
+              + " --filters " \
+              + " 'Name=name,Values=%s' " % (name) \
+              + " | jq -r '.Images[0].ImageId' "
+    result = local(command, capture=True)
+    return result
+
+
+def get_security_group_id(role):
+    region = get_default_region()
+    command = "aws ec2 describe-security-groups " \
+              + " --region %s " % (region) \
+              + " --filters " \
+              + " 'Name=tag-key,Values=Environment' " \
+              + " 'Name=tag-value,Values=%s' " % (ENVIRONMENT) \
+              + " 'Name=tag-key,Values=Role' " \
+              + " 'Name=tag-value,Values=%s' " % (role) \
+              + " | jq -r '.SecurityGroups[].GroupId' "
+    result = local(command, capture=True)
+    return result
+
+
+def get_subnet_id(subnet_name):
+    region = get_default_region()
+    command = "aws ec2 describe-subnets " \
+              + " --region %s " % (region) \
+              + " --filters " \
+              + " 'Name=tag-key,Values=Name' " \
+              + " 'Name=tag-value,Values=%s' " % (subnet_name) \
+              + " | jq '.Subnets[0].SubnetId' "
+    result = local(command, capture=True)
+    return json.loads(result)
+
 
 def get_security_group_tf_vars():
     vpc_id = get_vpc_id(ENVIRONMENT)
@@ -67,3 +153,9 @@ def get_current_ip_address():
     except:
         import json
         return json.loads(urllib2.urlopen('http://httpbin.org/ip').read())['origin']
+
+
+def get_env(key):
+    command = "echo $%s" % (key)
+    result = local(command, capture=True)
+    return result
