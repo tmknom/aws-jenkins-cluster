@@ -6,6 +6,20 @@ from tf_vars import *
 
 
 @task
+def build_ec2():
+    '''EC2構築'''
+    tf_vars = get_jenkins_cluster_tf_vars()
+    terraform_apply('ec2', tf_vars)
+
+
+@task
+def delete_ec2():
+    '''EC2削除'''
+    tf_vars = get_jenkins_cluster_tf_vars()
+    terraform_destroy('ec2', tf_vars)
+
+
+@task
 def build_vpc():
     '''VPC構築'''
     terraform_apply('vpc')
