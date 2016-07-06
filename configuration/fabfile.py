@@ -5,6 +5,7 @@ from fabric.api import *
 BASE_ROLE = 'base'
 JENKINS_BASE_ROLE = 'jenkins_base'
 JENKINS_MASTER_ROLE = 'jenkins_master'
+JENKINS_SLAVE_ROLE = 'jenkins_slave'
 
 EC2_USER = 'ec2-user'
 DEFAULT_SSH_PORT = '22'
@@ -14,6 +15,12 @@ DEFAULT_SSH_PORT = '22'
 def itamae_jenkins_master():
     '''jenkins_master コンフィギュレーション -H <ip_address>'''
     itamae(JENKINS_MASTER_ROLE)
+
+
+@task
+def itamae_jenkins_slave():
+    '''jenkins_slave コンフィギュレーション -H <ip_address>'''
+    itamae(JENKINS_SLAVE_ROLE)
 
 
 @task
