@@ -2,6 +2,7 @@
 
 from configuration.fabfile import itamae_base
 from configuration.fabfile import itamae_jenkins_base
+from configuration.fabfile import itamae_jenkins_master
 from orchestration.fabfile import build_vpc
 from orchestration.fabfile import delete_vpc
 from orchestration.fabfile import build_security_group
