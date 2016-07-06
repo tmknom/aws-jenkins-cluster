@@ -3,16 +3,27 @@
 from fabric.api import *
 
 BASE_ROLE = 'base'
+JENKINS_BASE_ROLE = 'jenkins_base'
 
 EC2_USER = 'ec2-user'
 DEFAULT_SSH_PORT = '22'
 
 
 @task
+def itamae_jenkins_base():
+    '''jenkins_base コンフィギュレーション -H <ip_address>'''
+    itamae(JENKINS_BASE_ROLE)
+
+
+@task
 def itamae_base():
     '''base コンフィギュレーション（初回） -H <ip_address>'''
+    itamae(BASE_ROLE)
+
+
+def itamae(role):
     execute_itamae(
-        BASE_ROLE,
+        role,
         EC2_USER,
         DEFAULT_SSH_PORT,
         get_env('SSH_INITIALIZE_KEY_PATH')
