@@ -1,2 +1,5 @@
+# AWSキーペア（秘密鍵）
+export SSH_INITIALIZE_KEY_PATH='xxxx'
+
 # 共有可能な環境変数定義
 source $(git rev-parse --show-toplevel)/shared_env.sh
