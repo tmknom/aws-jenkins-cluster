@@ -13,3 +13,4 @@ $ make
 * AWS CLI
 * Fabric
 * terraform
+* direnv
