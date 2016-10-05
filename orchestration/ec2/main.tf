@@ -1,7 +1,7 @@
 resource "aws_instance" "jenkins_master" {
   ami = "${var.jenkins_master_ami_id}"
   subnet_id = "${var.jenkins_subnet_id}"
-  instance_type = "${var.instance_type}"
+  instance_type = "${var.jenkins_master_instance_type}"
   key_name = "${var.jenkins_key_pair_name}"
   vpc_security_group_ids = [
     "${var.jenkins_master_security_group_id}",
@@ -29,7 +29,7 @@ resource "aws_instance" "jenkins_slave" {
 
   ami = "${var.jenkins_slave_ami_id}"
   subnet_id = "${var.jenkins_subnet_id}"
-  instance_type = "${var.instance_type}"
+  instance_type = "${var.jenkins_slave_instance_type}"
   key_name = "${var.jenkins_key_pair_name}"
   vpc_security_group_ids = [
     "${var.jenkins_slave_security_group_id}",

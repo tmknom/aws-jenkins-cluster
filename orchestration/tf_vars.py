@@ -10,8 +10,8 @@ JENKINS_SUBNET_NAME = 'JenkinsCluster-Public-Subnet-0'
 JENKINS_MASTER_TAG = 'JenkinsMaster'
 JENKINS_SLAVE_TAG = 'JenkinsSlave'
 
-JENKINS_MASTER_AMI = 'jenkins-master'
-JENKINS_SLAVE_AMI = 'jenkins-slave'
+JENKINS_MASTER_AMI = 'jenkins-master-20161005'
+JENKINS_SLAVE_AMI = 'jenkins-slave-20161005'
 
 
 def get_jenkins_cluster_tf_vars():

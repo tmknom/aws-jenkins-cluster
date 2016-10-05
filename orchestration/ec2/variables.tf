@@ -20,8 +20,12 @@ variable "jenkins_slave_count" {
   default = "2"
 }
 
-variable "instance_type" {
+variable "jenkins_master_instance_type" {
   default = "t2.micro"
+}
+
+variable "jenkins_slave_instance_type" {
+  default = "t2.medium"
 }
 
 variable "jenkins_volume_size" {
