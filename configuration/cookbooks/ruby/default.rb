@@ -1,4 +1,4 @@
-RUBY_VERSION = '2.1.4'
+RUBY_VERSION = '2.3.1'
 
 RBENV_DIR = '/opt/.rbenv'
 RBENV_SHELL = '/etc/profile.d/rbenv.sh'
