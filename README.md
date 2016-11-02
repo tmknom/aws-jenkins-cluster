@@ -55,7 +55,7 @@ $ fab delete_vpc
 ## インストール
 
 ```bash
-$ git cloen git@github.com:tmknom/aws-jenkins-cluster.git
+$ git clone git@github.com:tmknom/aws-jenkins-cluster.git
 $ cd aws-jenkins-cluster
 $ make
 ```
